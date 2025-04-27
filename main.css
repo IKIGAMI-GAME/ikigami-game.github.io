@@ -1,0 +1,335 @@
+/* main.css - Adding styles for the main website content */
+
+/* ヘッダー */
+header {
+  background-color: #111;
+  color: #00ff6a;
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 6px rgba(0, 255, 106, 0.1);
+}
+
+header h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(0, 255, 106, 0.7);
+}
+
+nav {
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+nav ul li {
+  margin: 0 1rem;
+}
+
+nav ul li a {
+  color: #00ff6a;
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(0, 255, 106, 0.9);
+}
+
+/* メインコンテンツ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+section {
+  padding: 4rem 0;
+}
+
+section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: #333;
+  position: relative;
+}
+
+section h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #111, #00ff6a);
+  border-radius: 2px;
+}
+
+/* ヒーローセクション */
+#hero {
+  height: 80vh;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url('https://source.unsplash.com/random/1600x900/?cyberpunk') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 0 2rem;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.btn {
+  display: inline-block;
+  background: linear-gradient(45deg, #111, #00ff6a);
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 15px rgba(0, 255, 106, 0.4);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 255, 106, 0.5);
+}
+
+/* About セクション */
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.about-image {
+  flex: 1;
+}
+
+.terminal-frame {
+  background: #111;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.terminal-text {
+  color: #00ff6a;
+  font-family: 'Courier New', monospace;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* 特徴セクション */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* ギャラリーセクション */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cyber-image {
+  height: 200px;
+  background: linear-gradient(45deg, #00ff6a, #111);
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s ease;
+}
+
+.gallery-item:nth-child(1) .cyber-image {
+  background-image: url('https://source.unsplash.com/random/600x400/?tokyo,future');
+}
+
+.gallery-item:nth-child(2) .cyber-image {
+  background-image: url('https://source.unsplash.com/random/600x400/?cyberpunk,brain');
+}
+
+.gallery-item:nth-child(3) .cyber-image {
+  background-image: url('https://source.unsplash.com/random/600x400/?digital,reality');
+}
+
+.gallery-item:nth-child(4) .cyber-image {
+  background-image: url('https://source.unsplash.com/random/600x400/?futuristic,cyber');
+}
+
+.gallery-item p {
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ダウンロードセクション */
+#download {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    url('https://source.unsplash.com/random/1600x900/?cyberpunk,technology') no-repeat center center/cover;
+  color: #fff;
+  text-align: center;
+}
+
+#download h2 {
+  color: #fff;
+}
+
+.download-options {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  display: inline-block;
+  background: rgba(0, 255, 106, 0.2);
+  color: #00ff6a;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  border: 2px solid #00ff6a;
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+.download-btn:hover {
+  background: #00ff6a;
+  color: #111;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 255, 106, 0.5);
+}
+
+.warning {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: rgba(255, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.warning p {
+  color: #ff9999;
+}
+
+/* フッター */
+footer {
+  background: #111;
+  color: #666;
+  padding: 3rem 0;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+}
+
+/* レスポンシブデザイン */
+@media screen and (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  nav ul li {
+    margin: 0.5rem 0;
+  }
+  
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  
+  .about-content {
+    flex-direction: column;
+  }
+  
+  .download-options {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .download-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}

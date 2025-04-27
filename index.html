@@ -1,58 +1,144 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IKIGAMI – シンプル紹介サイト</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <!-- CRT ブートオーバーレイ -->
+  <div id="crt-overlay" class="hidden">
+    <div class="crt-frame">
+      <div class="crt-wrapper">
+        <pre id="boot-text"></pre>
+      </div>
+    </div>
+  </div>
+  <!-- CRT ブートオーバーレイ終了 -->
+
+  <!-- 既存コンテンツ -->
   <header>
     <h1>IKIGAMI</h1>
     <nav>
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#download">Download</a></li>
+        <li><a href="#about">概要</a></li>
+        <li><a href="#features">特徴</a></li>
+        <li><a href="#gallery">ギャラリー</a></li>
+        <li><a href="#download">ダウンロード</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
+    <section id="hero">
+      <div class="hero-content">
+        <h2>あなたの生き様を体験せよ</h2>
+        <p>シミュレートされた現実、それが果たしてあなたの運命なのか？</p>
+        <a href="#download" class="btn">ダウンロード</a>
+      </div>
+    </section>
+
     <section id="about">
-      <h2>About</h2>
-      <p>IKIGAMIは、目的を見つける旅をテーマにしたインディーゲームです。美しい世界を探索し、謎を解き明かしてください。</p>
+      <div class="container">
+        <h2>IKIGAMI とは</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>IKIGAMIは2099年のNAGI社が開発した革新的な「実在シミュレーター」です。あなたの意識を仮想世界に接続し、無限の可能性を体験することができます。</p>
+            <p>この仮想空間では、あなたは自分自身の生き方を選び、その結果を体験することができます。あなたの選択が、あなたの運命を決定します。</p>
+            <p>完全没入型の体験で、現実と区別がつかないほどのリアルな感覚を提供します。</p>
+          </div>
+          <div class="about-image">
+            <div class="terminal-frame">
+              <pre class="terminal-text">
+$ connect --reality=3 --user=anonymous
+> Establishing connection...
+> Reality node #3 accessed.
+> Welcome. Your existence matters.
+              </pre>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="features">
-      <h2>Features</h2>
-      <ul>
-        <li>ストーリー重視のアドベンチャー</li>
-        <li>多彩なパズルと分岐エンディング</li>
-        <li>美しい手描き風グラフィック</li>
-      </ul>
+      <div class="container">
+        <h2>特徴</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">💫</div>
+            <h3>無限の可能性</h3>
+            <p>あなたの選択によって無限に分岐する現実を体験できます。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>意識連携</h3>
+            <p>あなたの思考が直接シミュレーションに反映されます。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⏱️</div>
+            <h3>時間操作</h3>
+            <p>時間の流れを自由に操作し、過去や未来を体験できます。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>共有体験</h3>
+            <p>他のユーザーと同じ仮想空間で体験を共有できます。</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="gallery">
-      <h2>Gallery</h2>
-      <p>近日公開予定</p>
+      <div class="container">
+        <h2>ギャラリー</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <div class="cyber-image"></div>
+            <p>ネオ東京・2099年</p>
+          </div>
+          <div class="gallery-item">
+            <div class="cyber-image"></div>
+            <p>脳内インターフェース</p>
+          </div>
+          <div class="gallery-item">
+            <div class="cyber-image"></div>
+            <p>量子現実のカスタマイズ</p>
+          </div>
+          <div class="gallery-item">
+            <div class="cyber-image"></div>
+            <p>サイバーゾーンB-12</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="download">
-      <h2>Download</h2>
-      <p>Steam／App Store／Google Playで配信中</p>
-      <ul>
-        <li><a href="#">Steam</a></li>
-        <li><a href="#">App Store</a></li>
-        <li><a href="#">Google Play</a></li>
-      </ul>
+      <div class="container">
+        <h2>ダウンロード</h2>
+        <p>IKIGAMIは現在ベータ版として提供されています。以下のリンクからダウンロードしてください。</p>
+        <div class="download-options">
+          <a href="#" class="download-btn">Windows版</a>
+          <a href="#" class="download-btn">Mac版</a>
+          <a href="#" class="download-btn">NeuroLink版</a>
+        </div>
+        <div class="warning">
+          <p>警告: 長時間の使用は現実との区別が困難になる可能性があります。2時間ごとに休憩を取ることをお勧めします。</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 IKIGAMI. All Rights Reserved.</p>
-  </footer>
+    <div class="container">
+      <p>© 2099 NAGI Corp. All Rights Reserved.</p>
+      <p>IKIGAMI、NAGIおよびそのロゴはNAGI社の登録商標です。</p>
+      <p>シミュレーションのご利用は自己責任でお願いします。現実との混同による損害について当社は一切責任を負いません。</p>
+    </div>  </footer>
+
+  <script src="boot.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

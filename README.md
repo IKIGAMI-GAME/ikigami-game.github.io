@@ -1,1 +1,0 @@
-# ikigami-game.github.io
