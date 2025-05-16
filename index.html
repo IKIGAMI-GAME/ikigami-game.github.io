@@ -1,279 +1,295 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>IKIGAMI 公式サイト</title>  
-  <meta name="description" content="IKIGAMIは開発中のRPG FPS+TPSアクションゲームです。">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  
-  <!-- Three.js関連スクリプト -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/postprocessing/EffectComposer.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/postprocessing/RenderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/postprocessing/ShaderPass.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/shaders/CopyShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
-
-  <!-- アニメーション用ライブラリ -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IKIGAMI - Game Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-  <div class="loading-screen">
-    <div class="loader"></div>
-    <div class="loading-text">IKIGAMI<span class="loading-dots">...</span></div>
-  </div>
-
-  <header>
-    <img src="assets/logo.png" alt="IKIGAMI ロゴ" class="logo" />
-    <h1>IKIGAMI</h1>
-    <p class="catch">魂を賭ける、極限の戦い。</p>
-    <nav>
-      <ul>
-        <li><a href="#hero">ホーム</a></li>
-        <li><a href="#about">ゲーム紹介</a></li>
-        <li><a href="#features">特徴</a></li>
-        <li><a href="#news">ニュース</a></li>
-        <li><a href="#contact">お問い合わせ</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section id="hero">
-    <canvas id="three-canvas"></canvas>
-    <div class="hero-overlay">
-      <h2>RPG × FPS × TPS アクション</h2>
-      <p>新感覚のバトル体験を。</p>
-      <div class="cta-buttons">
-        <button class="btn-primary">詳細を見る</button>
-        <button class="btn-secondary">トレーラーを視聴</button>
-      </div>
+    <div class="loading-screen">
+        <div class="loader"></div>
+        <h2>IKIGAMI</h2>
+        <p>LOADING...</p>
     </div>
-    <div class="scroll-hint">
-      <span>スクロールして詳細を見る</span>
-      <div class="scroll-arrow"></div>
+    <div class="background-container">
+        <video autoplay muted loop id="bg-video" style="display: none;">
+            <source src="assets/videos/bg-video.mp4" type="video/mp4">
+        </video>
+        <div class="bg-fallback"></div>
+        <canvas id="particle-canvas"></canvas>
+        <div class="overlay"></div>
     </div>
-  </section>
-
-  <main>
-    <section id="about" class="reveal">
-      <h2>ゲーム紹介</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <p>
-            IKIGAMIは、RPG要素とFPS/TPSアクションが融合した新しい体験を提供します。<br>
-            プレイヤーは魂を賭けて戦い、成長し、世界の謎を解き明かします。
-          </p>
-          <ul class="game-features">
-            <li>🌐 広大なオープンワールド</li>
-            <li>🔫 多彩な武器とスキル</li>
-            <li>👥 協力プレイモード</li>
-            <li>🏆 競争型マルチプレイヤー</li>
-          </ul>
-        </div>
-        <div class="screenshots">
-          <div class="screenshot-card">
-            <img src="assets/dummy_screenshot1.jpg" alt="ゲーム画面1" class="screenshot">
-            <span class="screenshot-caption">広大なオープンワールド</span>
-          </div>
-          <div class="screenshot-card">
-            <img src="assets/dummy_screenshot2.jpg" alt="ゲーム画面2" class="screenshot">
-            <span class="screenshot-caption">迫力のバトル</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="features" class="reveal">
-      <h2>特徴</h2>
-      <div class="features-list">
-        <div class="feature">
-          <div class="feature-canvas" id="feature1"></div>
-          <h3>FPS/TPS切替</h3>
-          <p>状況に応じて視点を自由に切り替え可能。バトルの幅が広がります。</p>
-          <div class="feature-details">
-            <span class="detail-icon">🎮</span>
-            <span>直感的な操作感</span>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-canvas" id="feature2"></div>
-          <h3>多彩なアクション</h3>
-          <p>近接・遠距離・特殊スキルを駆使した戦闘。独自の戦闘スタイルを確立できます。</p>
-          <div class="feature-details">
-            <span class="detail-icon">⚔️</span>
-            <span>100種類以上の武器</span>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-canvas" id="feature3"></div>
-          <h3>成長とカスタマイズ</h3>
-          <p>キャラクターや武器を自由に強化・カスタマイズ。あなただけの戦士を育てましょう。</p>
-          <div class="feature-details">
-            <span class="detail-icon">🔧</span>
-            <span>無限の組み合わせ</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="news" class="reveal">
-      <h2>開発進捗・ニュース</h2>
-      <div class="news-container">
-        <ul class="news-list">
-          <li class="news-item">
-            <span class="date">2025/05/10</span>
-            <div class="news-content">
-              <h3>サイト公開＆開発進行中！</h3>
-              <p>公式サイトをリニューアルしました。最新の開発情報をお届けします。</p>
-              <a href="#" class="read-more">続きを読む</a>
-            </div>
-          </li>
-          <li class="news-item">
-            <span class="date">2025/04/01</span>
-            <div class="news-content">
-              <h3>ゲームティザー公開</h3>
-              <p>IKIGAMIの世界観を紹介する初のティザートレーラーを公開しました。</p>
-              <a href="#" class="read-more">続きを読む</a>
-            </div>
-          </li>
-          <li class="news-item">
-            <span class="date">2025/03/15</span>
-            <div class="news-content">
-              <h3>クローズドベータテスト参加者募集</h3>
-              <p>限定50名様にクローズドベータテストへの参加資格をプレゼントします。</p>
-              <a href="#" class="read-more">続きを読む</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="contact" class="reveal">
-      <h2>お問い合わせ・リンク</h2>
-      <div class="contact-container">
-        <div class="contact-form">
-          <h3>メッセージを送る</h3>
-          <form id="contact-form">
-            <div class="form-group">
-              <input type="text" id="name" placeholder="お名前" required>
-            </div>
-            <div class="form-group">
-              <input type="email" id="email" placeholder="メールアドレス" required>
-            </div>
-            <div class="form-group">
-              <textarea id="message" placeholder="メッセージ内容" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn-submit">送信する</button>
-          </form>
-        </div>
-        <div class="social-links">
-          <h3>ソーシャルメディア</h3>
-          <ul class="links">
-            <li><a href="#" class="social-link twitter">公式Twitter</a></li>
-            <li><a href="#" class="social-link discord">Discord</a></li>
-            <li><a href="#" class="social-link youtube">YouTube</a></li>
-            <li><a href="#" class="social-link instagram">Instagram</a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="assets/logo.png" alt="IKIGAMI ロゴ" class="logo-small">
-        <p>IKIGAMI Project</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-column">
-          <h4>ゲーム</h4>
-          <ul>
-            <li><a href="#">特徴</a></li>
-            <li><a href="#">システム要件</a></li>
-            <li><a href="#">ギャラリー</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4>サポート</h4>
-          <ul>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">お問い合わせ</a></li>
-            <li><a href="#">バグ報告</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4>会社情報</h4>
-          <ul>
-            <li><a href="#">チーム紹介</a></li>
-            <li><a href="#">採用情報</a></li>
-            <li><a href="#">プレスキット</a></li>
-          </ul>
-        </div>
-      </div>
+    <header>
+        <h1 class="animate__animated animate__fadeInDown">IKIGAMI</h1>
+        <div class="header-subtitle animate__animated animate__fadeIn animate__delay-1s">GAME STUDIO</div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#home" class="nav-item"><i class="fas fa-home"></i><span>トップ</span></a></li>
+                <li><a href="#game-ikigami" class="nav-item"><i class="fas fa-gamepad"></i><span>ゲーム「IKIGAMI」</span></a></li>
+                <li><a href="#products" class="nav-item"><i class="fas fa-box-open"></i><span>プロダクト</span></a></li>
+                <li><a href="#oss" class="nav-item"><i class="fab fa-github"></i><span>OSS</span></a></li>
+                <li><a href="#art" class="nav-item"><i class="fas fa-palette"></i><span>アート</span></a></li>
+                <li><a href="#robotics" class="nav-item"><i class="fas fa-robot"></i><span>ロボット</span></a></li>
+                <li><a href="#roadmap" class="nav-item"><i class="fas fa-road"></i><span>ロードマップ</span></a></li>
+                <li><a href="#about" class="nav-item"><i class="fas fa-info-circle"></i><span>スタジオ概要</span></a></li>
+                <li><a href="#contact" class="nav-item"><i class="fas fa-envelope"></i><span>お問い合わせ</span></a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <section id="home" class="section-with-bg">
+                <div class="section-content animate__animated animate__fadeIn">
+                    <h2 class="section-title">ようこそ<span class="highlight">IKIGAMI</span>へ</h2>
+                    <div class="section-text">
+                        <p>IKIGAMIは、革新的なゲームとソフトウェアを創造するパーソナルゲームスタジオです。</p>
+                        <p>近日公開予定のRPG「IKIGAMI」にご期待ください！</p>
+                    </div>
+                    <div class="cta-buttons">
+                        <a href="#game-ikigami" class="btn btn-primary">ゲームを見る</a>
+                        <a href="#contact" class="btn btn-secondary">お問い合わせ</a>
+                    </div>
+                    <div class="floating-graphics">
+                        <div class="graphic-item"></div>
+                        <div class="graphic-item"></div>
+                        <div class="graphic-item"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="game-ikigami" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">ゲーム「<span class="highlight">IKIGAMI</span>」</h2>
+                    <div class="game-showcase">
+                        <div class="game-image">
+                            <div class="image-placeholder pulse-animation">
+                                <i class="fas fa-gamepad"></i>
+                                <span>ゲームプレビュー</span>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>世界観</h3>
+                            <p>新たなファンタジー世界を舞台にした冒険RPG。プレイヤーは未知の世界を冒険し、様々な仲間と出会い、自分だけの物語を紡いでいきます。</p>
+                            <h3>特徴</h3>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> ユニークなストーリーライン</li>
+                                <li><i class="fas fa-check"></i> 戦略的な戦闘システム</li>
+                                <li><i class="fas fa-check"></i> 美しいビジュアルとサウンド</li>
+                                <li><i class="fas fa-check"></i> プレイヤーの選択が物語に影響</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="products" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">プロダクト</h2>
+                    <div class="products-grid">
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fab fa-github"></i></div>
+                            <h3>OSSプロジェクト</h3>
+                            <p>GitHubで公開中のオープンソースソフトウェア</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-palette"></i></div>
+                            <h3>アート・コンセプト</h3>
+                            <p>ゲーム世界のためのアートワークやイラスト</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-robot"></i></div>
+                            <h3>ロボット開発</h3>
+                            <p>自作ロボットやハードウェア関連の活動</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-music"></i></div>
+                            <h3>サウンドトラック</h3>
+                            <p>オリジナルゲームミュージック</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="oss" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">OSS一覧</h2>
+                    <div class="products-grid">
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fab fa-github"></i></div>
+                            <h3>ikigami-game.github.io</h3>
+                            <p>このWebサイト自体もOSSとして公開中</p>
+                            <a href="https://github.com/ikigami-game/ikigami-game.github.io" class="btn btn-secondary" target="_blank">GitHubを見る</a>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fab fa-github"></i></div>
+                            <h3>今後追加予定</h3>
+                            <p>OSSプロジェクトを順次公開予定です</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="art" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">アートギャラリー</h2>
+                    <div class="products-grid">
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-paint-brush"></i></div>
+                            <h3>コンセプトアート</h3>
+                            <p>ゲームやプロダクトの世界観を表現したアート作品</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-image"></i></div>
+                            <h3>イラスト</h3>
+                            <p>キャラクターや背景などのイラスト集</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-camera-retro"></i></div>
+                            <h3>写真・その他</h3>
+                            <p>制作過程や参考資料など</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="robotics" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">ロボット開発レポート</h2>
+                    <div class="products-grid">
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-robot"></i></div>
+                            <h3>自作ロボット</h3>
+                            <p>開発中のロボットやハードウェアの紹介</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-tools"></i></div>
+                            <h3>開発レポート</h3>
+                            <p>進捗や技術的なチャレンジの記録</p>
+                        </div>
+                        <div class="product-card animate-item">
+                            <div class="product-icon"><i class="fas fa-link"></i></div>
+                            <h3>関連リンク</h3>
+                            <p>外部プロジェクトや参考資料</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="roadmap" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">ロードマップ</h2>
+                    <div class="timeline">
+                        <div class="timeline-item animate-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h3>2024年Q3</h3>
+                                <p>ゲーム「IKIGAMI」アルファ版リリース</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h3>2024年Q4</h3>
+                                <p>クローズドベータテスト開始</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h3>2025年Q1</h3>
+                                <p>オープンベータ版リリース</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item animate-item">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h3>2025年Q2</h3>
+                                <p>正式版リリース</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="about" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">スタジオ概要</h2>
+                    <div class="about-content">
+                        <div class="about-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <div class="about-text">
+                            <p>IKIGAMIは革新的なゲーム体験を創造し、ゲームを通じて物語と冒険を届けることを目指して設立されました。</p>
+                            <p>私たちは、技術とアートの融合を大切にし、常に新しいゲーム体験の探求を続けています。</p>
+                            <div class="studio-values">
+                                <div class="value-item">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <h4>革新</h4>
+                                </div>
+                                <div class="value-item">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>情熱</h4>
+                                </div>
+                                <div class="value-item">
+                                    <i class="fas fa-users"></i>
+                                    <h4>コミュニティ</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="contact" class="section-with-bg">
+                <div class="section-content animate__animated" data-animation="fadeIn">
+                    <h2 class="section-title">お問い合わせ</h2>
+                    <div class="contact-container">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <p>info@ikigami-game.com</p>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-twitter"></i>
+                                <p>@ikigami_game</p>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-discord"></i>
+                                <p>Discord: IKIGAMI Community</p>
+                            </div>
+                        </div>
+                        <form class="contact-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="お名前" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="メールアドレス" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="メッセージ" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">送信</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
-    <div class="copyright">
-      <small>&copy; 2025 IKIGAMI Project. All Rights Reserved.</small>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">IKIGAMI</div>
+            <div class="social-links">
+                <a href="https://github.com/ikigami-game/ikigami-game.github.io" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">&copy; 2024-2025 IKIGAMI Game Studio. All rights reserved.</p>
+        </div>
+    </footer>
+    <div class="scroll-top-btn">
+        <i class="fas fa-arrow-up"></i>
     </div>
-  </footer>
-
-  <script>
-    // ローディング画面
-    window.addEventListener('load', function() {
-      setTimeout(() => {
-        document.querySelector('.loading-screen').classList.add('loaded');
-      }, 1000);
-    });
-
-    // GSAPアニメーション設定
-    document.addEventListener('DOMContentLoaded', function() {
-      // スクロールヒントアニメーション
-      gsap.to('.scroll-arrow', {
-        y: 10,
-        opacity: 0.5,
-        repeat: -1,
-        yoyo: true,
-        duration: 1.5
-      });
-
-      // スクロールトリガー初期化
-      gsap.registerPlugin(ScrollTrigger);
-
-      // ヘッダー要素のアニメーション
-      gsap.from('header .logo, header h1, header .catch, nav ul li', {
-        y: -50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: 'power2.out',
-        delay: 1.5
-      });
-
-      // ヒーローセクションのアニメーション
-      gsap.from('.hero-overlay', {
-        scale: 0.9,
-        opacity: 0,
-        duration: 1.2,
-        delay: 1.8,
-        ease: 'power3.out'
-      });
-
-      // 各セクションのアニメーション（スクロールトリガー）
-      gsap.utils.toArray('.reveal').forEach(section => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top 80%',
-          onEnter: () => section.classList.add('active')
-        });
-      });
-    });
-  </script>
-
-  <script src="main.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
