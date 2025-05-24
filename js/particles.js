@@ -1,4 +1,4 @@
-// パーティクルアニメーション
+// 拡張パーティクルアニメーション
 class Particle {
     constructor(canvas, options = {}) {
         this.canvas = canvas;
@@ -11,19 +11,56 @@ class Particle {
             maxSize: 5,
             speed: 0.5,
             connectDistance: 150,
-            connectWidth: 0.4
+            connectWidth: 0.4,
+            interactive: false
         }, options);
         
         this.width = canvas.width;
         this.height = canvas.height;
         this.particles = [];
+        this.mouse = { x: 0, y: 0 };
+        
+        // テーマカラーマップ (Enhanced Modern Pastels)
+        this.themeColors = {
+            blue: 'rgba(139, 92, 246, 0.7)',
+            cyan: 'rgba(59, 130, 246, 0.7)',
+            purple: 'rgba(168, 85, 247, 0.7)',
+            green: 'rgba(16, 185, 129, 0.7)',
+            pink: 'rgba(236, 72, 153, 0.7)',
+            orange: 'rgba(249, 115, 22, 0.7)',
+            violet: 'rgba(196, 181, 253, 0.7)',
+            emerald: 'rgba(110, 231, 183, 0.7)',
+            red: 'rgba(248, 113, 113, 0.7)'
+        };
         
         this.init();
+        this.setupMouseInteraction();
         this.animate();
+    }
+    
+    // マウスインタラクションの設定
+    setupMouseInteraction() {
+        if (this.options.interactive) {
+            this.canvas.addEventListener('mousemove', (e) => {
+                const rect = this.canvas.getBoundingClientRect();
+                this.mouse.x = e.clientX - rect.left;
+                this.mouse.y = e.clientY - rect.top;
+            });
+        }
+    }
+    
+    // テーマ変更機能
+    updateTheme(themeName) {
+        const newColor = this.themeColors[themeName] || this.options.color;
+        this.particles.forEach(particle => {
+            particle.color = newColor;
+        });
+        this.options.color = newColor;
     }
     
     // パーティクルの初期化
     init() {
+        this.particles = []; // Reset particles
         for (let i = 0; i < this.options.count; i++) {
             const size = Math.random() * this.options.maxSize + 1;
             
@@ -31,9 +68,11 @@ class Particle {
                 x: Math.random() * this.width,
                 y: Math.random() * this.height,
                 size: size,
+                originalSize: size,
                 speedX: Math.random() * this.options.speed * 2 - this.options.speed,
                 speedY: Math.random() * this.options.speed * 2 - this.options.speed,
-                color: this.options.color
+                color: this.options.color,
+                alpha: 0.8
             });
         }
     }
@@ -44,10 +83,35 @@ class Particle {
         
         // パーティクルを描画
         this.particles.forEach(particle => {
+            // マウスインタラクション
+            if (this.options.interactive) {
+                const dx = this.mouse.x - particle.x;
+                const dy = this.mouse.y - particle.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    // マウスに近いパーティクルを大きくする
+                    particle.size = particle.originalSize * (1 + (100 - distance) / 100);
+                    particle.alpha = Math.min(1, 0.8 + (100 - distance) / 200);
+                } else {
+                    particle.size = particle.originalSize;
+                    particle.alpha = 0.8;
+                }
+            }
+            
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            this.ctx.fillStyle = particle.color;
+            
+            // アルファ値を考慮した色設定
+            const color = particle.color.replace(/[\d\.]+\)$/g, `${particle.alpha})`);
+            this.ctx.fillStyle = color;
             this.ctx.fill();
+            
+            // グロー効果
+            this.ctx.shadowBlur = 10;
+            this.ctx.shadowColor = particle.color;
+            this.ctx.fill();
+            this.ctx.shadowBlur = 0;
             
             // パーティクルを移動
             particle.x += particle.speedX;
@@ -74,8 +138,9 @@ class Particle {
                     this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
                     
                     // 距離に応じて透明度を調整
-                    const opacity = 1 - (distance / this.options.connectDistance);
-                    this.ctx.strokeStyle = this.options.color.replace('rgb', 'rgba').replace(')', `, ${opacity * this.options.connectWidth})`);
+                    const opacity = (1 - (distance / this.options.connectDistance)) * this.options.connectWidth;
+                    const connectColor = this.options.color.replace(/[\d\.]+\)$/g, `${opacity})`);
+                    this.ctx.strokeStyle = connectColor;
                     
                     this.ctx.lineWidth = this.options.connectWidth;
                     this.ctx.stroke();
@@ -92,5 +157,6 @@ class Particle {
         this.height = height;
         this.canvas.width = width;
         this.canvas.height = height;
+        this.init(); // Reinitialize particles for new dimensions
     }
 }

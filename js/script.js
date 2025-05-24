@@ -6,6 +6,136 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingScreen.style.visibility = 'hidden';
     }, 2500);
     
+    // Interactive Background System for Game-like Menu
+    const backgroundContainer = document.querySelector('.background-container');
+    const menuItems = document.querySelectorAll('.sidebar ul li a');
+    const overlay = document.querySelector('.overlay');
+    
+    // Background themes for each menu section (Enhanced Modern Pastels)
+    const backgroundThemes = {
+        '#home': {
+            gradient: 'linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(59, 130, 246, 0.05))',
+            particles: 'blue'
+        },
+        '#game-ikigami': {
+            gradient: 'linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(168, 85, 247, 0.05))',
+            particles: 'cyan'
+        },
+        '#team': {
+            gradient: 'linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(236, 72, 153, 0.05))',
+            particles: 'purple'
+        },
+        '#oss': {
+            gradient: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.05))',
+            particles: 'green'
+        },
+        '#art': {
+            gradient: 'linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(249, 115, 22, 0.05))',
+            particles: 'pink'
+        },
+        '#robotics': {
+            gradient: 'linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(245, 158, 11, 0.05))',
+            particles: 'orange'
+        },
+        '#roadmap': {
+            gradient: 'linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(168, 85, 247, 0.05))',
+            particles: 'violet'
+        },
+        '#about': {
+            gradient: 'linear-gradient(135deg, rgba(110, 231, 183, 0.08), rgba(59, 130, 246, 0.05))',
+            particles: 'emerald'
+        },
+        '#contact': {
+            gradient: 'linear-gradient(135deg, rgba(248, 113, 113, 0.08), rgba(168, 85, 247, 0.05))',
+            particles: 'red'
+        }
+    };
+    
+    // Dynamic background change function
+    function changeBackground(theme) {
+        if (overlay) {
+            overlay.style.background = theme.gradient;
+            overlay.style.transition = 'background 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }
+        
+        // Update particle system
+        if (window.currentParticleSystem) {
+            window.currentParticleSystem.updateTheme(theme.particles);
+        }
+    }
+    
+    // Add hover effects to menu items
+    menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        const theme = backgroundThemes[href];
+        
+        if (theme) {
+            // Mouse enter effect
+            item.addEventListener('mouseenter', () => {
+                changeBackground(theme);
+                
+                // Add screen scanning effect
+                createScanEffect();
+                
+                // Add pulse effect to the menu item
+                item.style.animation = 'menuPulse 1s ease-in-out';
+            });
+            
+            // Mouse leave effect
+            item.addEventListener('mouseleave', () => {
+                // Reset to default theme or current active theme
+                const activeItem = document.querySelector('.sidebar ul li a.active');
+                if (activeItem && activeItem !== item) {
+                    const activeHref = activeItem.getAttribute('href');
+                    const activeTheme = backgroundThemes[activeHref];
+                    if (activeTheme) {
+                        changeBackground(activeTheme);
+                    }
+                } else if (!activeItem) {
+                    // Default theme
+                    changeBackground(backgroundThemes['#home']);
+                }
+                
+                item.style.animation = '';
+            });
+        }
+    });
+    
+    // Screen scanning effect
+    function createScanEffect() {
+        const scanLine = document.createElement('div');
+        scanLine.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+            z-index: 999;
+            animation: scanAcrossScreen 1s ease-in-out;
+            pointer-events: none;
+        `;
+        
+        document.body.appendChild(scanLine);
+        
+        setTimeout(() => {
+            document.body.removeChild(scanLine);
+        }, 1000);
+    }
+    
+    // Add scan animation keyframes
+    const scanKeyframes = `
+        @keyframes scanAcrossScreen {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(50vh); opacity: 0.8; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    `;
+    
+    const style = document.createElement('style');
+    style.textContent = scanKeyframes;
+    document.head.appendChild(style);
+    
     // Check if background video exists and can be played
     const bgVideo = document.getElementById('bg-video');
     const bgVideoSource = bgVideo.querySelector('source');
@@ -30,19 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
     
-    // Initialize particle animation
+    // Enhanced particle animation with pastel colors
     function initParticles() {
         const canvas = document.getElementById('particle-canvas');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
-        // Create different colored particles
-        new Particle(canvas, {
-            count: 50,
-            color: 'rgba(108, 99, 255, 0.5)', // Primary color
-            maxSize: 4,
-            speed: 0.3,
-            connectDistance: 150
+        // Create enhanced particle system with pastel colors
+        window.currentParticleSystem = new Particle(canvas, {
+            count: 80,
+            color: 'rgba(160, 139, 250, 0.6)',
+            maxSize: 5,
+            speed: 0.5,
+            connectDistance: 180,
+            interactive: true
         });
         
         // Handle window resize
@@ -51,6 +182,44 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.height = window.innerHeight;
         });
     }
+    
+    // Interactive highlight animation for IKIGAMI.DEV
+    function setupInteractiveHighlight() {
+        const interactiveElements = document.querySelectorAll('.interactive-highlight');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove any existing animation class
+                this.classList.remove('highlight-active');
+                
+                // Force reflow
+                void this.offsetWidth;
+                
+                // Add animation class
+                this.classList.add('highlight-active');
+                
+                // Remove class after animation completes
+                setTimeout(() => {
+                    this.classList.remove('highlight-active');
+                }, 600);
+            });
+            
+            // Add hover effect
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    }
+    
+    // Initialize interactive highlight after DOM is ready
+    setupInteractiveHighlight();
     
     checkVideo();
 
